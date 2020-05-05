@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class SingletonDemo {
+
     public static void main(String[] args) throws Exception {
         new Thread(() -> {
             Swicth instance = Swicth.getInstance();

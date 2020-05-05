@@ -20,6 +20,27 @@ public class Swicth {
     private boolean isOpen;
     private Properties property;
 
+    //饿汉 加载既实现
+    private static Swicth swicth = new Swicth();
+
+    public Swicth getSwicthHungry() {
+        return swicth;
+    }
+
+    //懒汉 减少初始化加载
+    private volatile static Swicth swicthLazy;
+
+    public Swicth getSwitchLazy() {
+        if (swicthLazy == null) {
+            synchronized (Swicth.class) {
+                if (swicthLazy != null) {
+                    swicthLazy = new Swicth();
+                }
+            }
+        }
+        return swicthLazy;
+    }
+
     /**
      * 静态内部类 初始化不会被加载
      */
@@ -45,14 +66,14 @@ public class Swicth {
             e.printStackTrace();
         }
         String openStr = this.property.getProperty("design.pattern.open");
-        if(StringUtils.isEmpty(openStr)){
+        if (StringUtils.isEmpty(openStr)) {
             this.isOpen = false;
-            return ;
+            return;
         }
         this.isOpen = Boolean.parseBoolean(openStr);
     }
 
-    public Boolean getIsOpen(){
+    public Boolean getIsOpen() {
         return this.isOpen;
     }
 }
